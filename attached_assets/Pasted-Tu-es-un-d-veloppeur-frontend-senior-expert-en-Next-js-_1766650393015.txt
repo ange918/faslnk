@@ -1,0 +1,130 @@
+Tu es un développeur frontend senior expert en Next.js (App Router), TypeScript, Tailwind CSS et UX mobile premium.
+
+CONTEXTE :
+Le frontend du SaaS FASHLINK est déjà créé avec Next.js.
+Toutes les pages existent, mais :
+- le design n’est pas encore fin, minimaliste et épuré
+- certaines fonctionnalités frontend ne sont pas totalement opérationnelles
+- après quelques minutes, l’application revient automatiquement à l’interface initiale (splash/auth), ce qui est un bug critique
+
+STACK IMPOSÉE :
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Heroicons
+- Mobile-first
+- Frontend uniquement (mock data, pas de backend réel)
+
+OBJECTIF GLOBAL :
+1. Analyser l’existant
+2. Vérifier que TOUTES les étapes fonctionnelles sont présentes
+3. Corriger les bugs de logique frontend
+4. Rendre chaque étape fonctionnelle
+5. Stabiliser définitivement la navigation
+6. Raffiner le design (minimaliste, premium, épuré)
+7. Ne jamais casser l’existant
+
+━━━━━━━━━━━━━━━━━━━━━━
+ÉTAPES FONCTIONNELLES OBLIGATOIRES
+━━━━━━━━━━━━━━━━━━━━━━
+
+1. SPLASH SCREEN
+- Fond noir plein écran
+- Logo FASHLINK centré
+- Animation unique de 4 secondes
+- Le logo se déplace ensuite en haut à gauche
+- Cette animation ne doit s’exécuter QU’UNE SEULE FOIS
+
+➡️ Utiliser localStorage ou un état global :
+- hasSeenSplash = true
+- Interdire tout retour automatique au splash
+
+2. AUTHENTIFICATION
+INSCRIPTION MULTI-ÉTAPES :
+Étape 1 :
+- Nom
+- Prénom
+- Email
+- Mot de passe
+
+Étape 2 :
+- Date de naissance
+- Validation stricte : minimum 18 ans, maximum 69 ans
+
+Éléments obligatoires :
+- Bouton pleine largeur “Continuer avec Google” (mock)
+- Texte : “Avez-vous un compte ? Connectez-vous” (lien actif)
+
+CONNEXION :
+- Email
+- Mot de passe
+- Lien “Mot de passe oublié” (mock)
+
+➡️ Après inscription ou connexion :
+- Accès immédiat à l’interface principale
+- L’état utilisateur doit persister (localStorage ou Context)
+- AUCUNE redirection automatique non voulue
+
+3. INTERFACE PRINCIPALE (STYLE CHATGPT)
+- Fond clair ou sombre maîtrisé
+- Header fixe
+- Menu burger en haut à gauche
+- Icône profil en haut à droite
+- Zone centrale stable
+- Aucune réinitialisation automatique de l’interface
+
+4. MENU BURGER (LIENS FONCTIONNELS)
+- Profil
+- ADN créatif
+- Assistant IA
+- Moodboard / Storytelling
+- Clients
+- Mesures clients
+- Messages
+- Paramètres
+- Déconnexion
+
+5. PROFIL UTILISATEUR
+- Photo de profil
+- Nom
+- Bio courte
+- Statut visible :
+  - Disponible
+  - Occupé (si contrat mock actif)
+
+6. MESSAGERIE (MOCK)
+- Liste de conversations
+- Interface type chat
+- Envoi / réception de messages mock
+- Navigation fluide
+
+7. CLIENTS & MESURES
+- Liste de clients
+- Fiche client
+- Formulaire complet de prise de mesures
+- Sauvegarde mock (state ou localStorage)
+- Consultation et modification des mesures
+
+━━━━━━━━━━━━━━━━━━━━━━
+CORRECTIONS CRITIQUES
+━━━━━━━━━━━━━━━━━━━━━━
+- Supprimer tout setTimeout ou useEffect provoquant un reset global
+- Centraliser l’authentification (AuthContext ou équivalent)
+- Ne jamais rediriger vers splash si l’utilisateur est connecté
+- Protéger les routes intelligemment
+- Vérifier la persistance des états
+
+━━━━━━━━━━━━━━━━━━━━━━
+DESIGN À APPLIQUER
+━━━━━━━━━━━━━━━━━━━━━━
+- Minimaliste
+- Épuré
+- Premium
+- Mobile-first
+- Espaces respirants
+- Typographie sobre
+- Aucune surcharge visuelle
+- Animations légères et utiles uniquement
+
+OBJECTIF FINAL :
+Un frontend Next.js STABLE, COHÉRENT, PRODUCTION-READY, prêt pour l’intégration backend et IA.

@@ -1,0 +1,111 @@
+Tu es un développeur frontend senior expert en Next.js (App Router), Tailwind CSS et UX mobile.
+
+CONTEXTE :
+Le frontend du SaaS FASHLINK existe déjà.
+Toutes les pages et fonctionnalités ont été créées, mais :
+- le design n’est pas encore minimaliste ni premium
+- certaines étapes ne sont pas totalement fonctionnelles
+- après quelques minutes, l’application revient automatiquement à l’écran initial (splash/auth)
+
+OBJECTIF :
+1. ANALYSER le projet existant
+2. VÉRIFIER que toutes les étapes suivantes sont bien présentes
+3. CORRIGER les problèmes de logique frontend
+4. RENDRE chaque étape fonctionnelle (sans backend réel)
+5. AMÉLIORER le design (minimaliste, épuré, luxe)
+6. STABILISER la navigation (aucun retour automatique non voulu)
+
+STACK IMPOSÉE :
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Heroicons
+- Mobile-first
+- Aucun backend réel (mock uniquement)
+
+━━━━━━━━━━━━━━━━━━━━━━
+ÉTAPES À VÉRIFIER ET RENDRE FONCTIONNELLES
+━━━━━━━━━━━━━━━━━━━━━━
+
+1. SPLASH SCREEN
+- Logo FASHLINK centré sur fond noir
+- Animation vers le coin haut gauche après 4 secondes
+- Cette animation ne doit s’exécuter QU’UNE SEULE FOIS
+- Une fois terminée, ne jamais revenir au splash
+
+➡️ Utiliser :
+- localStorage ou state global pour mémoriser que le splash est déjà passé
+
+2. AUTHENTIFICATION
+INSCRIPTION :
+- Étape 1 : nom, prénom, email, mot de passe
+- Étape 2 : date de naissance
+  - Validation âge : 18 à 69 ans
+- Bouton Google (mock)
+- Lien vers connexion
+
+CONNEXION :
+- Email
+- Mot de passe
+- Lien “mot de passe oublié” (mock)
+
+➡️ Après inscription ou connexion :
+- Redirection vers l’interface principale
+- L’état "utilisateur connecté" doit être conservé en mémoire (context ou localStorage)
+
+3. INTERFACE PRINCIPALE (STYLE CHATGPT)
+- Header fixe
+- Menu burger à gauche
+- Icône profil à droite
+- Zone centrale stable
+- Aucun reset automatique de l’interface
+
+4. MENU BURGER
+Liens fonctionnels vers :
+- Profil
+- ADN créatif
+- Messages
+- Clients
+- Mesures
+- Paramètres
+- Déconnexion
+
+5. PROFIL UTILISATEUR
+- Photo
+- Nom
+- Bio
+- Statut :
+  - Disponible
+  - Occupé (si contrat actif mock)
+
+6. MESSAGERIE
+- Liste de conversations mock
+- Interface chat
+- Envoi de messages mock
+
+7. MESURES CLIENT
+- Sélection d’un client
+- Formulaire de mesures
+- Sauvegarde mock en state ou localStorage
+- Affichage des mesures enregistrées
+
+━━━━━━━━━━━━━━━━━━━━━━
+CORRECTIONS IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━
+- Supprimer tout setTimeout ou useEffect qui provoque un reset automatique
+- Centraliser l’état utilisateur (AuthContext ou équivalent)
+- Ne jamais rediriger vers le splash si l’utilisateur est déjà connecté
+- Vérifier la gestion des routes protégées
+
+━━━━━━━━━━━━━━━━━━━━━━
+DESIGN À APPLIQUER
+━━━━━━━━━━━━━━━━━━━━━━
+- Minimaliste
+- Fond noir / gris très foncé
+- Typographie sobre
+- Espaces respirants
+- Pas de dégradés inutiles
+- Animations légères uniquement (hover, focus, transition)
+
+OBJECTIF FINAL :
+Un frontend STABLE, PROPRE, COHÉRENT, prêt pour intégration backend.
