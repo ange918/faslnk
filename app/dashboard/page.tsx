@@ -15,7 +15,6 @@ import {
   BriefcaseIcon,
   ArrowUpTrayIcon,
   ShieldCheckIcon,
-  RectangleStackIcon,
   PhotoIcon
 } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,16 +23,14 @@ import { useAuth } from "../context/AuthContext";
 import ProfileView from "./views/ProfileView";
 import MeasurementsView from "./views/MeasurementsView";
 import MessagesView from "./views/MessagesView";
+import MoodboardView from "./views/MoodboardView";
+import SettingsView from "./views/SettingsView";
 
-interface DashboardProps {
-  userFirstName?: string;
-}
-
-export default function DashboardPage({ userFirstName = "Ange" }: DashboardProps) {
+export default function DashboardPage() {
   const { logout, user } = useAuth();
-  const firstName = user?.prenom || userFirstName;
+  const firstName = user?.prenom || "Ange";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"chat" | "adn" | "projects" | "measurements" | "profile" | "messages">("chat");
+  const [activeTab, setActiveTab] = useState<"chat" | "adn" | "projects" | "measurements" | "profile" | "messages" | "moodboard" | "settings">("chat");
   const [messages, setMessages] = useState([
     { id: 1, role: "assistant", content: `Bonjour ${firstName}, prêt à créer ?` }
   ]);
@@ -127,6 +124,8 @@ export default function DashboardPage({ userFirstName = "Ange" }: DashboardProps
         {activeTab === "profile" && <ProfileView user={user} onBack={() => setActiveTab("chat")} />}
         {activeTab === "measurements" && <MeasurementsView onBack={() => setActiveTab("chat")} />}
         {activeTab === "messages" && <MessagesView onBack={() => setActiveTab("chat")} />}
+        {activeTab === "moodboard" && <MoodboardView onBack={() => setActiveTab("chat")} />}
+        {activeTab === "settings" && <SettingsView onBack={() => setActiveTab("chat")} />}
       </main>
 
       <AnimatePresence>
@@ -157,12 +156,12 @@ export default function DashboardPage({ userFirstName = "Ange" }: DashboardProps
                 <MenuButton icon={UserCircleIcon} label="Mon Profil" onClick={() => { setActiveTab("profile"); setIsMenuOpen(false); }} />
                 <MenuButton icon={SparklesIcon} label="ADN Créatif" onClick={() => { setActiveTab("adn"); setIsMenuOpen(false); }} />
                 <MenuButton icon={SparklesIcon} label="Assistant IA" onClick={() => { setActiveTab("chat"); setIsMenuOpen(false); }} />
-                <MenuButton icon={PhotoIcon} label="Moodboard / Storytelling" onClick={() => setIsMenuOpen(false)} />
+                <MenuButton icon={PhotoIcon} label="Moodboard / Storytelling" onClick={() => { setActiveTab("moodboard"); setIsMenuOpen(false); }} />
                 <MenuButton icon={BriefcaseIcon} label="Mes Projets" onClick={() => { setActiveTab("projects"); setIsMenuOpen(false); }} />
                 <MenuButton icon={UserGroupIcon} label="Clients" onClick={() => { setActiveTab("measurements"); setIsMenuOpen(false); }} />
                 <MenuButton icon={RulerIcon} label="Mesures Clients" onClick={() => { setActiveTab("measurements"); setIsMenuOpen(false); }} />
                 <MenuButton icon={ChatBubbleLeftRightIcon} label="Messages" onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }} />
-                <MenuButton icon={Cog6ToothIcon} label="Paramètres" onClick={() => setIsMenuOpen(false)} />
+                <MenuButton icon={Cog6ToothIcon} label="Paramètres" onClick={() => { setActiveTab("settings"); setIsMenuOpen(false); }} />
                 <div className="pt-4 mt-4 border-t border-gray-100">
                   <MenuButton icon={ArrowLeftOnRectangleIcon} label="Déconnexion" color="text-red-500" onClick={() => logout()} />
                 </div>
