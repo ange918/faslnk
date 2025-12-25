@@ -6,7 +6,6 @@ import {
   PlusIcon,
   UserIcon,
   ArchiveBoxIcon,
-  PhoneIcon,
   MagnifyingGlassIcon,
   EllipsisVerticalIcon
 } from "@heroicons/react/24/outline";
@@ -26,12 +25,8 @@ export default function MeasurementsView({ onBack }: MeasurementsViewProps) {
     if (saved) {
       setClients(JSON.parse(saved));
     } else {
-      const initial = [
-        { id: 1, name: "Marie K.", phone: "07 08 09 10 11", height: "170", bust: "92", waist: "68", hips: "94" },
-        { id: 2, name: "Jean L.", phone: "06 05 04 03 02", height: "185", bust: "105", waist: "88", hips: "102" },
-      ];
-      setClients(initial);
-      localStorage.setItem("fashlink_clients", JSON.stringify(initial));
+      setClients([]);
+      localStorage.setItem("fashlink_clients", JSON.stringify([]));
     }
   }, []);
 
@@ -123,38 +118,48 @@ export default function MeasurementsView({ onBack }: MeasurementsViewProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          {clients.map((client) => (
-            <div key={client.id} className="bg-white border border-gray-100 p-6 rounded-[32px] shadow-sm group hover:border-black/5 transition-all">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center font-bold text-gray-300 border border-gray-100 text-sm">
-                    {client.name[0]}
+        {clients.length === 0 ? (
+          <div className="bg-white border border-dashed border-gray-200 rounded-[40px] p-20 text-center flex flex-col items-center justify-center">
+             <div className="w-16 h-16 bg-gray-50 rounded-3xl flex items-center justify-center mb-6 border border-gray-100">
+               <UserIcon className="w-8 h-8 text-gray-200" />
+             </div>
+             <h3 className="font-bold text-gray-400 uppercase tracking-widest text-xs">Aucun client enregistré</h3>
+             <p className="text-gray-300 text-[11px] mt-2 font-medium">Commencez par ajouter votre premier client.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4">
+            {clients.map((client) => (
+              <div key={client.id} className="bg-white border border-gray-100 p-6 rounded-[32px] shadow-sm group hover:border-black/5 transition-all">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center font-bold text-gray-300 border border-gray-100 text-sm">
+                      {client.name[0]}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-base tracking-tight">{client.name}</h3>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">{client.phone}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-base tracking-tight">{client.name}</h3>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">{client.phone}</p>
-                  </div>
+                  <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-300">
+                    <EllipsisVerticalIcon className="w-5 h-5" />
+                  </button>
                 </div>
-                <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-300">
-                  <EllipsisVerticalIcon className="w-5 h-5" />
+                
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <MeasureCard label="Taille" value={`${client.height}cm`} />
+                  <MeasureCard label="Poitrine" value={`${client.bust}cm`} />
+                </div>
+
+                <button 
+                  onClick={() => setSelectedClient(client.name)}
+                  className="w-full mt-4 py-3.5 bg-gray-50 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all border border-gray-100/50"
+                >
+                  Accéder au dossier ➡
                 </button>
               </div>
-              
-              <div className="mt-6 grid grid-cols-2 gap-3">
-                <MeasureCard label="Taille" value={`${client.height}cm`} />
-                <MeasureCard label="Poitrine" value={`${client.bust}cm`} />
-              </div>
-
-              <button 
-                onClick={() => setSelectedClient(client.name)}
-                className="w-full mt-4 py-3.5 bg-gray-50 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all border border-gray-100/50"
-              >
-                Accéder au dossier ➡
-              </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

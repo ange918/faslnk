@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { 
   PhotoIcon, 
   PlusIcon,
   ArrowLeftIcon,
-  RectangleStackIcon
+  RectangleStackIcon,
+  TrashIcon
 } from "@heroicons/react/24/outline";
 
 interface MoodboardViewProps {
@@ -12,10 +14,32 @@ interface MoodboardViewProps {
 }
 
 export default function MoodboardView({ onBack }: MoodboardViewProps) {
-  const boards = [
-    { id: 1, title: "Lumina S/S 26", items: 12, date: "12 Mars 2025" },
-    { id: 2, title: "Heritage Deep", items: 8, date: "05 Mars 2025" },
-  ];
+  const [boards, setBoards] = useState<any[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("fashlink_moodboards");
+    if (saved) {
+      setBoards(JSON.parse(saved));
+    }
+  }, []);
+
+  const createMoodboard = () => {
+    const newBoard = {
+      id: Date.now(),
+      title: "Nouveau Moodboard",
+      items: 0,
+      date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+    };
+    const updated = [newBoard, ...boards];
+    setBoards(updated);
+    localStorage.setItem("fashlink_moodboards", JSON.stringify(updated));
+  };
+
+  const deleteMoodboard = (id: number) => {
+    const updated = boards.filter(b => b.id !== id);
+    setBoards(updated);
+    localStorage.setItem("fashlink_moodboards", JSON.stringify(updated));
+  };
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500">
@@ -27,40 +51,61 @@ export default function MoodboardView({ onBack }: MoodboardViewProps) {
             </button>
             <h1 className="text-xl font-bold uppercase tracking-widest text-black">Moodboard</h1>
           </div>
-          <button className="p-2.5 bg-black text-white rounded-2xl shadow-lg active:scale-95 transition-all">
+          <button 
+            onClick={createMoodboard}
+            className="p-2.5 bg-black text-white rounded-2xl shadow-lg active:scale-95 transition-all"
+          >
             <PlusIcon className="w-6 h-6" />
           </button>
         </div>
       </header>
 
       <main className="p-6 max-w-2xl mx-auto w-full space-y-6">
-        <div className="grid grid-cols-1 gap-4">
-          {boards.map((board) => (
-            <div key={board.id} className="bg-white border border-gray-100 p-6 rounded-[32px] shadow-sm group hover:border-black/5 transition-all">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100">
-                  <RectangleStackIcon className="w-6 h-6 text-gray-300" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-base tracking-tight">{board.title}</h3>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">{board.items} Éléments • {board.date}</p>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-3 gap-2">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="aspect-square bg-gray-50 rounded-xl border border-gray-100 overflow-hidden relative">
-                    <div className="absolute inset-0 bg-black/5" />
-                  </div>
-                ))}
-              </div>
-
-              <button className="w-full mt-4 py-3.5 bg-gray-50 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all border border-gray-100/50">
-                Ouvrir le Moodboard ➡
-              </button>
+        {boards.length === 0 ? (
+          <div className="bg-white border border-dashed border-gray-200 rounded-[40px] p-20 text-center flex flex-col items-center justify-center">
+            <div className="w-16 h-16 bg-gray-50 rounded-3xl flex items-center justify-center mb-6 border border-gray-100">
+              <PhotoIcon className="w-8 h-8 text-gray-200" />
             </div>
-          ))}
-        </div>
+            <h3 className="font-bold text-gray-400 uppercase tracking-widest text-xs">Aucun moodboard</h3>
+            <p className="text-gray-300 text-[11px] mt-2 font-medium">Créez votre première direction créative.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4">
+            {boards.map((board) => (
+              <div key={board.id} className="bg-white border border-gray-100 p-6 rounded-[32px] shadow-sm group hover:border-black/5 transition-all">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100">
+                      <RectangleStackIcon className="w-6 h-6 text-gray-300" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-base tracking-tight">{board.title}</h3>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">{board.items} Éléments • {board.date}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => deleteMoodboard(board.id)}
+                    className="p-2 hover:bg-red-50 rounded-full text-gray-300 hover:text-red-500 transition-all"
+                  >
+                    <TrashIcon className="w-5 h-5" />
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="aspect-square bg-gray-50 rounded-xl border border-gray-100 overflow-hidden relative">
+                      <div className="absolute inset-0 bg-black/5" />
+                    </div>
+                  ))}
+                </div>
+
+                <button className="w-full mt-4 py-3.5 bg-gray-50 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all border border-gray-100/50">
+                  Ouvrir le Moodboard ➡
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

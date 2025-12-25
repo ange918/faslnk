@@ -31,16 +31,15 @@ export default function DashboardPage() {
   const firstName = user?.prenom || "Ange";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"chat" | "adn" | "projects" | "measurements" | "profile" | "messages" | "moodboard" | "settings">("chat");
-  const [messages, setMessages] = useState([
-    { id: 1, role: "assistant", content: `Bonjour ${firstName}, prêt à créer ?` }
-  ]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState("");
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
     
-    setMessages([...messages, { id: Date.now(), role: "user", content: input }]);
+    const newMessages = [...messages, { id: Date.now(), role: "user", content: input }];
+    setMessages(newMessages);
     setInput("");
     
     setTimeout(() => {
@@ -69,35 +68,40 @@ export default function DashboardPage() {
       <main className="flex-1 pt-16 flex flex-col">
         {activeTab === "chat" && (
           <div className="flex-1 flex flex-col pb-24 animate-in fade-in duration-500">
-            <div className="px-6 pt-10 pb-6 max-w-2xl mx-auto w-full">
-              <h2 className="text-3xl font-bold tracking-tight mb-2">Bonjour {firstName},</h2>
-              <p className="text-gray-500 text-lg">prêt à créer ?</p>
-            </div>
-
-            <div className="flex-1 px-6 space-y-8 max-w-2xl mx-auto w-full">
-              {messages.map((msg) => (
-                <div 
-                  key={msg.id}
-                  className={cn(
-                    "flex items-start gap-4 animate-in fade-in slide-in-from-bottom-2 duration-400",
-                    msg.role === "user" ? "flex-row-reverse" : ""
-                  )}
-                >
-                  <div className={cn(
-                    "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm",
-                    msg.role === "assistant" ? "bg-black text-white" : "bg-white border border-gray-200 text-gray-400"
-                  )}>
-                    {msg.role === "assistant" ? <SparklesIcon className="w-5 h-5" /> : <UserCircleIcon className="w-5 h-5" />}
-                  </div>
-                  <div className={cn(
-                    "p-5 rounded-2xl max-w-[85%] text-[15px] leading-relaxed shadow-sm",
-                    msg.role === "assistant" ? "bg-white border border-gray-100" : "bg-black text-white"
-                  )}>
-                    {msg.content}
-                  </div>
+            {messages.length === 0 ? (
+              <div className="px-6 pt-10 pb-6 max-w-2xl mx-auto w-full text-center flex-1 flex flex-col justify-center items-center">
+                <div className="w-20 h-20 bg-black text-white rounded-[32px] flex items-center justify-center mb-8 shadow-2xl animate-bounce">
+                  <SparklesIcon className="w-10 h-10" />
                 </div>
-              ))}
-            </div>
+                <h2 className="text-3xl font-bold tracking-tight mb-4">Bonjour {firstName},</h2>
+                <p className="text-gray-400 text-lg max-w-[280px] leading-relaxed">Quelle est votre vision créative aujourd'hui ?</p>
+              </div>
+            ) : (
+              <div className="flex-1 px-6 space-y-8 max-w-2xl mx-auto w-full pt-8">
+                {messages.map((msg) => (
+                  <div 
+                    key={msg.id}
+                    className={cn(
+                      "flex items-start gap-4 animate-in fade-in slide-in-from-bottom-2 duration-400",
+                      msg.role === "user" ? "flex-row-reverse" : ""
+                    )}
+                  >
+                    <div className={cn(
+                      "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm",
+                      msg.role === "assistant" ? "bg-black text-white" : "bg-white border border-gray-200 text-gray-400"
+                    )}>
+                      {msg.role === "assistant" ? <SparklesIcon className="w-5 h-5" /> : <UserCircleIcon className="w-5 h-5" />}
+                    </div>
+                    <div className={cn(
+                      "p-5 rounded-2xl max-w-[85%] text-[15px] leading-relaxed shadow-sm",
+                      msg.role === "assistant" ? "bg-white border border-gray-100" : "bg-black text-white"
+                    )}>
+                      {msg.content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#F9FAFB] via-[#F9FAFB] to-transparent">
               <form onSubmit={handleSend} className="max-w-2xl mx-auto relative group">
@@ -157,12 +161,11 @@ export default function DashboardPage() {
                 <MenuButton icon={SparklesIcon} label="ADN Créatif" onClick={() => { setActiveTab("adn"); setIsMenuOpen(false); }} />
                 <MenuButton icon={SparklesIcon} label="Assistant IA" onClick={() => { setActiveTab("chat"); setIsMenuOpen(false); }} />
                 <MenuButton icon={PhotoIcon} label="Moodboard / Storytelling" onClick={() => { setActiveTab("moodboard"); setIsMenuOpen(false); }} />
-                <MenuButton icon={BriefcaseIcon} label="Mes Projets" onClick={() => { setActiveTab("projects"); setIsMenuOpen(false); }} />
                 <MenuButton icon={UserGroupIcon} label="Clients" onClick={() => { setActiveTab("measurements"); setIsMenuOpen(false); }} />
-                <MenuButton icon={RulerIcon} label="Mesures Clients" onClick={() => { setActiveTab("measurements"); setIsMenuOpen(false); }} />
                 <MenuButton icon={ChatBubbleLeftRightIcon} label="Messages" onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }} />
                 <MenuButton icon={Cog6ToothIcon} label="Paramètres" onClick={() => { setActiveTab("settings"); setIsMenuOpen(false); }} />
                 <div className="pt-4 mt-4 border-t border-gray-100">
+                  <MenuButton icon={ArrowLeftOnRectangleIcon} label="Export PDF" onClick={() => { setActiveTab("projects"); setIsMenuOpen(false); }} />
                   <MenuButton icon={ArrowLeftOnRectangleIcon} label="Déconnexion" color="text-red-500" onClick={() => logout()} />
                 </div>
               </nav>

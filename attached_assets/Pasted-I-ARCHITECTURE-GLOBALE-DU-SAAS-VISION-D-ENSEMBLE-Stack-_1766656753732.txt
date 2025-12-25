@@ -1,0 +1,298 @@
+I. ARCHITECTURE GLOBALE DU SAAS (VISION D’ENSEMBLE)
+Stack imposée
+
+Frontend : Next.js (App Router) + TypeScript + Tailwind CSS
+
+Backend : API Routes Next.js (Node.js)
+
+Base de données : PostgreSQL (externe, créée manuellement)
+
+Auth :
+
+Email + mot de passe
+
+Google OAuth
+
+IA : API LLM (non implémentée dans ce prompt, seulement intégrée côté UI & logique)
+
+Règles SaaS non négociables
+
+Chaque utilisateur voit uniquement ses données
+
+Aucune donnée par défaut (pas de clients, pas de moodboards, pas de messages)
+
+Accès conditionné à une session valide
+
+Pas de reload automatique après inactivité
+
+Splash screen affiché une seule fois par session
+
+II. LOGIQUE FONCTIONNELLE (FRONT + BACK)
+1. Authentification & session
+
+Création de compte :
+
+Email / mot de passe
+
+Google OAuth
+
+Les données d’inscription servent à :
+
+créer l’utilisateur
+
+initialiser le profil
+
+Session persistée via cookie sécurisé
+
+Si l’utilisateur est connecté → redirection vers le dashboard
+
+2. Splash Screen (écran FASHLINK)
+
+Comportement exact :
+
+Background noir
+
+Logo FASHLINK centré
+
+Barre de chargement en bas
+
+À 100 % → affichage formulaire
+
+Splash affiché 1 seule fois
+
+localStorage.setItem("fashlink_splash_seen", "true")
+
+3. Inscription multi-étapes (mobile-first)
+Étape 1 (visible par défaut)
+
+Nom
+
+Prénom
+
+Email
+
+Mot de passe
+
+Bouton “Continuer”
+
+Étape 2 (après validation)
+
+Date de naissance
+
+Validation âge : 18 à 69 ans
+
+Bas du formulaire
+
+Bouton Google (full width)
+
+Texte :
+
+Avez-vous un compte ? Connectez-vous
+
+4. Interface principale (type ChatGPT)
+Layout
+
+Menu burger en haut à gauche
+
+Avatar utilisateur en haut à droite
+
+Zone centrale : assistant IA (vide au début)
+
+Menu burger
+
+Profil
+
+ADN créatif
+
+Moodboards
+
+Projets IA
+
+Mesures clients
+
+Export
+
+Déconnexion
+
+5. Profil utilisateur
+
+Modifier photo
+
+Modifier bio
+
+Modifier prénom (libre)
+
+Modifier nom :
+
+uniquement tous les 20 jours
+
+backend vérifie la date
+
+Aucune donnée publique visible par d’autres utilisateurs
+
+6. Moodboards
+
+Créer un moodboard vide
+
+Ajouter :
+
+texte
+
+image
+
+couleur
+
+Supprimer / modifier
+
+Tous liés à user_id
+
+7. Interface Mesures Clients
+
+Ajouter un client
+
+Champs :
+
+Nom client
+
+Téléphone
+
+Mesures (poitrine, taille, hanches, bras, etc.)
+
+Données privées
+
+Pas de messagerie
+
+Pas de contrat
+
+III. BASE DE DONNÉES (RAPPEL – LOGIQUE SaaS)
+
+Tu crées la base manuellement.
+Le frontend ne crée rien en dur.
+
+Relations clés :
+
+users → creative_profiles (1–1)
+
+users → moodboards (1–N)
+
+users → creative_projects (1–N)
+
+users → client_measurements (1–N)
+
+(Le schéma SQL détaillé qu’on a fait précédemment reste valide.)
+
+IV. IA & EXPORT (MVP – côté interface)
+
+Champ texte pour décrire une idée
+
+Bouton “Générer direction créative”
+
+Résultat affiché dans l’interface
+
+Sauvegarde comme projet
+
+Export PDF (bouton visible, logique simulée)
+
+V. PROMPT FINAL POUR REPLIT (À COPIER-COLLER)
+
+👉 Ceci est le prompt unique, optimisé pour Replit :
+
+PROMPT REPLIT
+
+Tu es un développeur senior spécialisé en SaaS modernes.
+
+Crée le frontend complet d’une plateforme SaaS nommée FASHLINK, destinée aux stylistes, en utilisant :
+
+Next.js (App Router)
+
+TypeScript
+
+Tailwind CSS
+
+Heroicons pour les icônes
+
+⚠️ Le design doit être minimaliste, premium, épuré, mobile-first, sans composants inutiles.
+
+1. Splash Screen
+
+Background noir
+
+Logo FASHLINK centré
+
+Barre de chargement en bas
+
+Une fois à 100 %, afficher l’écran d’authentification
+
+Le splash ne doit s’afficher qu’une seule fois par session
+
+2. Authentification
+
+Formulaire d’inscription en 2 étapes :
+
+Étape 1 : nom, prénom, email, mot de passe
+
+Étape 2 : date de naissance (18–69 ans)
+
+Bouton Google OAuth pleine largeur
+
+Lien “Connectez-vous”
+
+Mot de passe requis à l’inscription et à la connexion
+
+3. Dashboard (après connexion)
+
+Interface type ChatGPT
+
+Menu burger en haut à gauche
+
+Avatar utilisateur en haut à droite
+
+Menu :
+
+Profil
+
+ADN créatif
+
+Moodboards
+
+Projets IA
+
+Mesures clients
+
+Export
+
+Déconnexion
+
+4. Profil
+
+Modifier photo, bio
+
+Modifier le nom uniquement tous les 20 jours (logique prête côté UI)
+
+5. Moodboards
+
+Aucun moodboard par défaut
+
+Création, modification, suppression
+
+Tous liés à l’utilisateur connecté
+
+6. Mesures Clients
+
+Interface pour enregistrer les mesures des clients
+
+Données privées, pas de messagerie
+
+Contraintes importantes
+
+Pas de reload automatique après inactivité
+
+Pas de données fictives
+
+Architecture claire et modulaire
+
+Composants réutilisables
+
+UX similaire aux SaaS modernes (Notion, Linear, ChatGPT)
+
+Génère uniquement du code propre, structuré, prêt à connecter à un backend PostgreSQL existant.
