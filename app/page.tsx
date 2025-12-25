@@ -30,7 +30,7 @@ export default function RootPage() {
   }, [hasSeenSplash, setHasSeenSplash]);
 
   if (user) {
-    return <DashboardPage userFirstName={user.prenom} />;
+    return <DashboardPage />;
   }
 
   if (showSplash && !hasSeenSplash) {
