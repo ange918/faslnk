@@ -10,11 +10,11 @@ export default function SplashScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setPhase("top-left");
-    }, 4000);
+    }, 2500);
 
     const authTimer = setTimeout(() => {
       setPhase("auth");
-    }, 5000);
+    }, 3500);
 
     return () => {
       clearTimeout(timer);
