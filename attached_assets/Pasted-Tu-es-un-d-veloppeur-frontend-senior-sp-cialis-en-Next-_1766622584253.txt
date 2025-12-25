@@ -1,0 +1,157 @@
+Tu es un développeur frontend senior spécialisé en Next.js.
+
+OBJECTIF :
+Créer le FRONTEND COMPLET du SaaS mobile-first « FASHLINK » avec Next.js (App Router), Tailwind CSS et Heroicons.
+AUCUN backend réel : utiliser uniquement des données mockées (JSON / state local).
+
+STACK TECHNIQUE OBLIGATOIRE :
+- Next.js 14+ (App Router)
+- TypeScript
+- Tailwind CSS
+- Heroicons
+- Mobile-first (design optimisé smartphone)
+- Composants réutilisables
+- Animations simples (CSS / transitions Tailwind)
+
+━━━━━━━━━━━━━━━━━━━━━━
+PHASE 1 — SPLASH SCREEN
+━━━━━━━━━━━━━━━━━━━━━━
+- Background : noir (#000)
+- Logo "FASHLINK" centré (texte ou image mock)
+- Slogan sous le logo :
+  "Define your creative identity."
+- Animation :
+  - Le logo reste centré pendant 4 secondes
+  - Puis se déplace en douceur vers le coin haut gauche
+- Après l’animation, afficher l’écran Auth
+
+━━━━━━━━━━━━━━━━━━━━━━
+PHASE 2 — AUTHENTIFICATION
+━━━━━━━━━━━━━━━━━━━━━━
+Écran mobile unique avec bascule Inscription / Connexion
+
+INSCRIPTION (multi-étapes) :
+
+Étape 1 (visible par défaut) :
+- Nom
+- Prénom
+- Email
+- Mot de passe
+- Bouton "S’inscrire"
+
+Au clic → afficher Étape 2
+
+Étape 2 :
+- Date de naissance (date picker)
+- Validation stricte :
+  - minimum 18 ans
+  - maximum 69 ans
+- Bouton "Créer mon compte"
+
+Sous le formulaire :
+- Bouton full-width :
+  - Icône Google
+  - Texte : "Continuer avec Google"
+
+En bas :
+- Texte :
+  "Vous avez déjà un compte ?"
+- Lien cliquable :
+  "Connectez-vous"
+
+CONNEXION :
+- Email
+- Mot de passe
+- Lien :
+  "Mot de passe oublié ?"
+
+━━━━━━━━━━━━━━━━━━━━━━
+PHASE 3 — INTERFACE PRINCIPALE (STYLE CHATGPT)
+━━━━━━━━━━━━━━━━━━━━━━
+Après connexion :
+
+Layout mobile :
+- Header fixe
+- Menu burger en haut à gauche (Heroicons)
+- Icône profil utilisateur en haut à droite
+
+Interface centrale :
+- Zone de contenu vide ou message de bienvenue
+- Design minimaliste, clair, inspiré de ChatGPT
+
+MENU BURGER (liens mock) :
+- Mon profil
+- ADN créatif
+- Mes clients
+- Prendre des mesures
+- Messages
+- Paramètres
+- Déconnexion
+
+━━━━━━━━━━━━━━━━━━━━━━
+PHASE 4 — PROFILS UTILISATEURS
+━━━━━━━━━━━━━━━━━━━━━━
+Profil type Instagram (mock) :
+- Photo de profil
+- Nom
+- Rôle : Styliste / Client
+- Bio courte
+- Statut :
+  - "Disponible"
+  - "Occupé" (si contrat actif)
+
+Condition :
+Si un styliste a déjà un contrat actif,
+afficher badge :
+- "Occupé" (couleur distincte)
+
+━━━━━━━━━━━━━━━━━━━━━━
+PHASE 5 — MESSAGERIE
+━━━━━━━━━━━━━━━━━━━━━━
+- Liste de conversations (mock)
+- Interface type chat
+- Messages alignés gauche / droite
+- Champ input + bouton envoyer
+
+━━━━━━━━━━━━━━━━━━━━━━
+PHASE 6 — GESTION DES MESURES (STYLISTE)
+━━━━━━━━━━━━━━━━━━━━━━
+Écran dédié :
+- Sélection d’un client
+- Formulaire de mesures :
+  - Tour de poitrine
+  - Tour de taille
+  - Tour de hanches
+  - Épaules
+  - Longueur bras
+  - Longueur pantalon
+- Bouton :
+  "Enregistrer les mesures"
+
+Stockage mock en state local ou JSON
+
+━━━━━━━━━━━━━━━━━━━━━━
+STRUCTURE DU PROJET
+━━━━━━━━━━━━━━━━━━━━━━
+- app/
+  - page.tsx (splash)
+  - auth/
+  - dashboard/
+  - profile/
+  - messages/
+  - measurements/
+- components/
+- data/ (mock)
+- styles/
+
+━━━━━━━━━━━━━━━━━━━━━━
+RÈGLES IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━
+- Pas de backend
+- Pas d’API externe
+- Pas de design desktop prioritaire
+- Code propre, lisible, structuré
+- UI moderne, luxe, minimaliste (noir / blanc / doré léger)
+
+OBJECTIF FINAL :
+Obtenir un prototype frontend crédible, fluide et prêt à être connecté plus tard à un backend réel.
