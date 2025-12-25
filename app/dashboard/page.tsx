@@ -6,7 +6,7 @@ import {
   UserCircleIcon, 
   SparklesIcon,
   UserGroupIcon,
-  RulerIcon,
+  AcademicCapIcon as RulerIcon,
   ChatBubbleLeftRightIcon,
   Cog6ToothIcon,
   ArrowLeftOnRectangleIcon,
